@@ -1,0 +1,17 @@
+#ResultBasic, #ResultFinal, #Result {
+    border: 1px solid;
+    margin: 5px;
+    padding: 5px;
+}
+
+#ResultBasic {
+    border-color: blue;
+}
+
+#ResultFinal {
+    border-color: green;
+}
+
+#Result {
+    border-color: red;
+}

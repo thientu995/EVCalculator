@@ -1,79 +1,107 @@
-<div>
-  Exposure Value
-</div>
+<h1>
+  {{title}}
+</h1>
+<div class="Content">
+  <div id="ResultBasic">
+    <h2>Basic (Result of Camera)</h2>
+    <div class="Group">
+      <h3>Focus Length (mm)</h3>
+      <input type="text" [(ngModel)]="valueBasic.FocalLength" />
+    </div>
 
-<div>
-  <h2>Basic (Result of Camera)</h2>
-  <div>
-    <h3>Aperture</h3>
-    <select [(ngModel)]="valueBasic.Aperture" (ngModelChange)="onCal()">
-      <option *ngFor="let item of apertureValue" [ngValue]="item.text">{{item.text}}</option>
-    </select>
-  </div>
+    <div class="Group">
+      <h3>Aperture</h3>
+      <select [(ngModel)]="valueBasic.Aperture" (ngModelChange)="onCal()">
+        <option *ngFor="let item of apertureValue" [ngValue]="item.text">{{item.text}}</option>
+      </select>
+    </div>
 
-  <div>
-    <h3>Shutter Speed</h3>
-    <select [(ngModel)]="valueBasic.Shutter" (ngModelChange)="onCal()">
-      <option *ngFor="let item of shutterSpeed" [ngValue]="item.text">{{item.text}}</option>
-    </select>
-  </div>
+    <div class="Group">
+      <h3>Shutter Speed</h3>
+      <select [(ngModel)]="valueBasic.Shutter" (ngModelChange)="onCal()">
+        <option *ngFor="let item of shutterSpeed" [ngValue]="item.text">{{item.text}}</option>
+      </select>
+    </div>
 
-  <div>
-    <h3>ISO/ASA</h3>
-    <select [(ngModel)]="valueBasic.ISO" (ngModelChange)="onCal()">
-      <option *ngFor="let item of isoValue" [ngValue]="item.value">{{item.text}}</option>
-    </select>
-  </div>
+    <div class="Group">
+      <h3>ISO/ASA</h3>
+      <select [(ngModel)]="valueBasic.ISO" (ngModelChange)="onCal()">
+        <option *ngFor="let item of isoValue" [ngValue]="item.value">{{item.text}}</option>
+      </select>
+    </div>
 
-  <!-- <div>
+    <!-- <div>
     <h3>Neutral Density (ND Filter)</h3>
     <select [(ngModel)]="valueBasic.Stop">
       <option *ngFor="let item of stopValue" [ngValue]="item.value">{{item.text}}</option>
     </select>
   </div> -->
-</div>
+  </div>
 
-<div>
-  <h2>Final (Result of You want)</h2>
-  <div>
-    <h3>Aperture</h3>
-    <select [(ngModel)]="valueFinal.Aperture" (ngModelChange)="onCal()">
-      <option *ngFor="let item of apertureValue" [ngValue]="item.text">{{item.text}}</option>
-    </select>
-  </div>
-  <div>
-    <h3>ISO/ASA</h3>
-    <select [(ngModel)]="valueFinal.ISO" (ngModelChange)="onCal()">
-      <option *ngFor="let item of isoValue" [ngValue]="item.value">{{item.text}}</option>
-    </select>
-  </div>
-  <div>
-    <h3>Neutral Density (ND Filter)</h3>
-    <select [(ngModel)]="valueFinal.Stop" (ngModelChange)="onCal()">
-      <option *ngFor="let item of stopValue" [ngValue]="item.value">{{item.text}}</option>
-    </select>
-  </div>
-</div>
+  <div id="ResultFinal">
+    <h2>Final (Result of You want)</h2>
+    <div class="Group">
+      <h3>Aperture</h3>
+      <select [(ngModel)]="valueFinal.Aperture" (ngModelChange)="onCal()">
+        <option *ngFor="let item of apertureValue" [ngValue]="item.text">{{item.text}}</option>
+      </select>
+    </div>
 
-<div>
-  <h2>Result</h2>
+    <div class="Group">
+      <h3>ISO/ASA</h3>
+      <select [(ngModel)]="valueFinal.ISO" (ngModelChange)="onCal()">
+        <option *ngFor="let item of isoValue" [ngValue]="item.value">{{item.text}}</option>
+      </select>
+    </div>
 
-  <div>
-    <h3>Exposure Value (EV100)</h3>
-    {{valueResult.EV}}
+    <div class="Group">
+      <h3>Neutral Density (ND Filter)</h3>
+      <select [(ngModel)]="valueFinal.Stop" (ngModelChange)="onCal()">
+        <option *ngFor="let item of stopValue" [ngValue]="item.value">{{item.text}}</option>
+      </select>
+    </div>
   </div>
-  <div>
-    <h3>Light Value (EV{{valueResult.ISO}})</h3>
-    {{valueResult.LV}}
-  </div>
-  
-  <div>
-    <h3>Exposure Time Final</h3>
-    {{valueResult.ET}}
-  </div>
-  <div>
-    <h3>Exposure Time with ND Filter</h3>
-    <p>Filter blocks {{valueResult.Stop}} stops of light</p>
-    {{valueResult.ETND}}
+
+  <div id="Result">
+    <h2>Result</h2>
+
+    <div class="Group">
+      <h3>Exposure Value (EV100)</h3>
+      {{formatNum(valueResult.EV)}} ({{Math.round(valueResult.EV)}})
+    </div>
+
+    <div class="Group">
+      <h3>Light Value (EV{{valueResult.ISO}})</h3>
+      {{formatNum(valueResult.LV)}} ({{Math.round(valueResult.LV)}})
+    </div>
+
+    <div class="Group">
+      <h3>Exposure Time Final</h3>
+      <p>{{formatNum(valueResult.ET)}}s ({{formatSpeed(valueResult.ET)}}s)</p>
+      <p [innerHTML]="formatStyleShutter(valueResult.ET)"></p>
+    </div>
+
+    <div class="Group">
+      <h3>Exposure Time with ND Filter</h3>
+      <p>Filter blocks {{valueResult.Stop}} stops of light</p>
+      <p>{{formatNum(valueResult.ETND)}}s ({{formatSpeed(valueResult.ETND)}}s)</p>
+      <p [innerHTML]="formatStyleShutter(valueResult.ETND)"></p>
+    </div>
+
+    <div class="Group">
+      <h3>Exposure Value Chart</h3>
+      <table>
+        <tbody *ngFor="let item of evChart; index as i">
+          <td [ngStyle]="getColorEV(i)">
+            <span *ngIf="item.value == Math.round(valueResult.LV)">
+              <fa-icon [icon]="['fas', item.icon]"></fa-icon>
+            </span>
+          </td>
+          <td>{{item.value}}</td>
+          <td>{{item.lightSource}}</td>
+          <td>{{item.text}}</td>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

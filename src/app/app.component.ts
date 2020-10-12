@@ -1,4 +1,5 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 import { Component } from '@angular/core';
 
 @Component({
@@ -6,11 +7,17 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
+  constructor(library: FaIconLibrary) {
+    library.addIconPacks(fas);
+  }
+
   ngOnInit() {
     this.onCal();
   }
-
+  Math = Math;
+  title = 'Exposure Calculator';
   apertureValue = [
     { value: 1, class: 'full-stop', text: 'f/1' },
     { value: 1.122, class: 'third-stop', text: 'f/1.1' },
@@ -179,9 +186,41 @@ export class AppComponent {
     { value: '13', text: 'ND113/ND8192: 13 stops 0.012%' },
   ]
 
-  title = 'EVCal';
+  evChart = [
+    { value: '-6', color: '', icon: 'star-and-crescent', lightSource: 'Starlight to dim ambient light', text: 'Night, away from city lights, subject under starlight only.' },
+    { value: '-5', color: '', icon: 'star-and-crescent', lightSource: 'Starlight to dim ambient light', text: 'Night, away from city lights, subject under crescent moon.' },
+    { value: '-4', color: '', icon: 'star-and-crescent', lightSource: 'Starlight to dim ambient light', text: 'Night, away from city lights, subject under half moon. Meteors (during showers, with time exposure).' },
+    { value: '-3', color: '', icon: 'star-and-crescent', lightSource: 'Starlight to dim ambient light', text: 'Night, away from city lights, subject under full moon.' },
+    { value: '-2', color: '', icon: 'star-and-crescent', lightSource: 'Starlight to dim ambient light', text: 'Night, away from city lights, snowscape under full moon.' },
+    { value: '-1', color: '', icon: 'star-and-crescent', lightSource: 'Starlight to dim ambient light', text: 'Subjects lit by dim ambient artificial light.' },
+    { value: '0', color: '', icon: 'star-and-crescent', lightSource: 'Starlight to dim ambient light', text: 'Subjects lit by dim ambient artificial light.' },
+    { value: '1', color: '', icon: 'moon', lightSource: 'Moon eclipse to night home interior', text: 'Distant view of lighted skyline.' },
+    { value: '2', color: '', icon: 'moon', lightSource: 'Moon eclipse to night home interior', text: 'Lightning (with time exposure). Total eclipse of moon.' },
+    { value: '3', color: '', icon: 'moon', lightSource: 'Moon eclipse to night home interior', text: 'Fireworks (with time exposure).' },
+    { value: '4', color: '', icon: 'moon', lightSource: 'Moon eclipse to night home interior', text: 'Candle lit close-ups. Christmas lights, floodlit buildings, fountains, and monuments. Subjects under bright street lamps.' },
+    { value: '5', color: '', icon: 'moon', lightSource: 'Moon eclipse to night home interior', text: 'Night home interiors, average light. School or church auditoriums. Subjects lit by campfires or bonfires.' },
+    { value: '6', color: '', icon: 'lightbulb', lightSource: 'Neon lights to landscape after sunset', text: 'Brightly lit home interiors at night. Fairs, amusement parks.' },
+    { value: '7', color: '', icon: 'lightbulb', lightSource: 'Neon lights to landscape after sunset', text: 'Bottom of rainforest canopy. Brightly lighted nighttime streets. Indoor sports. Stage shows, circuses.' },
+    { value: '8', color: '', icon: 'lightbulb', lightSource: 'Neon lights to landscape after sunset', text: 'Las Vegas or Times Square at night. Store windows. Campfires, bonfires, burning buildings. Ice shows, football, baseball etc. at night. Interiors with bright florescent lights.' },
+    { value: '9', color: '', icon: 'lightbulb', lightSource: 'Neon lights to landscape after sunset', text: 'Landscapes, city skylines 10 minutes after sunset. Neon lights, spotlighted subjects.' },
+    { value: '10', color: '', icon: 'lightbulb', lightSource: 'Neon lights to landscape after sunset', text: 'Landscapes and skylines immediately after sunset. Crescent moon (long lens).' },
+    { value: '11', color: '', icon: 'sun', lightSource: 'Bright light to weak sun', text: 'Sunsets. Subjects in deep shade.' },
+    { value: '12', color: '', icon: 'sun', lightSource: 'Bright light to weak sun', text: 'Half moon (long lens). Subject in open shade or heavy overcast.' },
+    { value: '13', color: '', icon: 'sun', lightSource: 'Bright light to weak sun', text: 'Gibbous moon (long lens). Subjects in cloudy-bright light (no shadows).' },
+    { value: '14', color: '', icon: 'sun', lightSource: 'Bright light to weak sun', text: 'Full moon (long lens). Subjects in weak, hazy sun.' },
+    { value: '15', color: '', icon: 'sun', lightSource: 'Bright light to weak sun', text: 'Subjects in bright or hazy sun (Sunny f/16 rule).' },
+    { value: '16', color: '', icon: 'sun', lightSource: 'Bright light to weak sun', text: 'Subjects in bright daylight on sand or snow.' },
+    { value: '17', color: '', icon: 'sun', lightSource: 'Bright daylight to direct sunlight', text: 'Rarely encountered in nature. Some man made lighting.' },
+    { value: '18', color: '', icon: 'sun', lightSource: 'Bright daylight to direct sunlight', text: 'Rarely encountered in nature. Some man made lighting.' },
+    { value: '19', color: '', icon: 'sun', lightSource: 'Bright daylight to direct sunlight', text: 'Rarely encountered in nature. Some man made lighting.' },
+    { value: '20', color: '', icon: 'sun', lightSource: 'Bright daylight to direct sunlight', text: 'Rarely encountered in nature. Some man made lighting.' },
+    { value: '21', color: '', icon: 'sun', lightSource: 'Bright daylight to direct sunlight', text: 'Rarely encountered in nature. Some man made lighting.' },
+    { value: '22', color: '', icon: 'sun', lightSource: 'Bright daylight to direct sunlight', text: 'Extremely bright. Rarely encountered in nature.' },
+    { value: '23', color: '', icon: 'sun', lightSource: 'Bright daylight to direct sunlight', text: 'Extremely bright. Rarely encountered in nature.' },
+  ]
 
   valueBasic = {
+    FocalLength: 50,
     Aperture: this.apertureValue[21].text,
     Shutter: this.shutterSpeed[21].text,
     ISO: this.isoValue[12].value,
@@ -203,13 +242,14 @@ export class AppComponent {
   }
 
   onCal() {
-    this.valueResult.ISO = Number(this.valueBasic.ISO.split("/")[1]);
+    this.valueResult.ISO = Number(this.valueFinal.ISO.split("/")[1]);
     this.valueResult.Stop = Number(this.valueFinal.Stop);
     this.valueResult.EV = this.calEV(Number(this.valueBasic.Aperture.split("/")[1]), eval(this.valueBasic.Shutter), 100);
     this.valueResult.LV = this.calEV(Number(this.valueBasic.Aperture.split("/")[1]), eval(this.valueBasic.Shutter), this.valueResult.ISO);
 
-    this.valueResult.ET = this.calET(Number(this.valueFinal.ISO.split("/")[1]), Number(this.valueFinal.Aperture.split("/")[1]), this.valueResult.LV);
-    this.valueResult.ETND = this.calETND(this.valueResult.ET, this.valueResult.Stop);
+    this.valueResult.ET = this.calET(Number(this.valueBasic.ISO.split("/")[1]), Number(this.valueFinal.Aperture.split("/")[1]), this.valueResult.LV);
+    var ETFinal = this.calET(this.valueResult.ISO, Number(this.valueFinal.Aperture.split("/")[1]), this.valueResult.LV);
+    this.valueResult.ETND = this.calETND(ETFinal, this.valueResult.Stop);
   }
 
   /**
@@ -280,74 +320,35 @@ export class AppComponent {
     return Math.abs(ET * Math.pow(2, Stop));
   }
 
-  private formatSpeed(value: number) {
-    var h = value / 3600;
-    var m = (value % 3600) / 60;
-    var s = value % 60;
-    var tooFastToBeDisplayed = false;
-    if (h > Number.MAX_SAFE_INTEGER) {
-      tooFastToBeDisplayed = true;
+  formatSpeed(value: number) {
+    var time = Math.round(1 / value);
+    if (time < 0.0000001) {
+      return Math.round(value) + '';
     }
-
-    var hoursToDisplay = this.removeDot(h);
-    var minutesToDisplay = this.removeDot(m);
-
-    var secondsToDisplay = '';
-    if (h >= 1 || m >= 1 || s > 30) {//Longer shutter speed than 30s
-      s = Math.round(s * 10.0) / 10.0;
-      secondsToDisplay = this.removeDot(s) + "s";
-    } else { //Less than 30s
-      var min = 30;
-      var index = -1;
-      var diff;
-      for (var i = this.shutterSpeed.length - 1; i >= 0; i--) {
-        diff = Math.abs(s - this.parseSpeed(this.shutterSpeed[i].text));
-        if (diff < min) {
-          min = diff;
-          index = i;
-        } else {
-          break;
-        }
-      }
-
-      if(this.shutterSpeed[index]){
-        secondsToDisplay = this.shutterSpeed[index].text;
-      }
-    }
-
-    var speed = '';
-
-    if (tooFastToBeDisplayed) {
-      speed = "Excessive exposure";
-    } else if (m < 1 && h < 1) {
-      speed = secondsToDisplay;
-    } else if (m >= 1 && h <= 0) {
-      if (m < 10) {
-        speed = minutesToDisplay + "m " + secondsToDisplay;
-      } else {
-        speed = minutesToDisplay + "m " + secondsToDisplay;
-      }
-    } else {
-      speed = hoursToDisplay + "h " + minutesToDisplay + "m " + secondsToDisplay;
-    }
-    console.log(speed, hoursToDisplay, minutesToDisplay, secondsToDisplay);
-    return speed;
+    return '1/' + time;
   }
 
-  private removeDot(value: number) {
-    var fraction = value % 1;
-    if (fraction == 0.0) {
-      return value.toString().split("\\.")[0];
-    }
-    return value.toString();
+  formatNum(value: number) {
+    return value.toFixed(4);
   }
 
-  private parseSpeed(uSpeed: string) {
-    var tmp = uSpeed.split("s")[0];
-    if (tmp.indexOf("1/") >= 0) {
-      tmp = tmp.split("1/")[1];
-      return 1 / parseFloat(tmp);
+  formatStyleShutter(value: number) {
+    value = Number(this.formatNum(value)) - Number(this.formatNum(1 / Number(this.valueBasic.FocalLength)));
+    if (value > 0) {
+      return 'You should use a <b>TRIPOD</b>';
     }
-    return parseFloat(tmp);
+    else {
+      return '';
+    }
+  }
+
+  getColorEV(index: number) {
+    index = Math.abs(index + 1);
+    var rgbBkg = [10 * index, 10 * index, 0];
+    var rgbColor = [255 - (index * 10), 0, 0];
+    return {
+      'color': 'rgb(' + rgbColor.join(',') + ')',
+      'background-color': 'rgb(' + rgbBkg.join(',') + ')'
+    };
   }
 }
