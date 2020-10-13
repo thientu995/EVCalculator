@@ -1,17 +1,7 @@
-#ResultBasic, #ResultFinal, #Result {
-    border: 1px solid;
-    margin: 5px;
+h2 {
     padding: 5px;
 }
 
-#ResultBasic {
-    border-color: blue;
-}
-
-#ResultFinal {
-    border-color: green;
-}
-
-#Result {
-    border-color: red;
+.w3-card {
+    margin-bottom: 15px;
 }

@@ -1,27 +1,43 @@
 # EVCal
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.6.
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## ND Filter
 
-## Code scaffolding
+Given an original speed and the Stop value of the attached NF filter, it calculates final
+exposure time.
+http://www.vassilistangoulis.com/gr/?p=4958
+Tnd = T0 * 2^ND
+where:
+- ND is the Stop value of your ND filter
+- T0 is the Base shutter speed (without filter attached) in seconds
+- Tnd is the final exposure time
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## EV Cal
 
-## Build
+ https://photo.stackexchange.com/questions/32359/why-does-ev-increase-as-iso-increases
+ the  log2(100/S) is wrong on that link!
+ The correct formula appears in Wikipedia
+ https://en.wikipedia.org/wiki/Exposure_value
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+ EV = log2(N²) + log2(1/t) - log2(S/100)
+ EV = aperture + shutter - ISO
 
-## Running unit tests
+ t = S*N²/100*2^EV
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+ * where:
+ - N is the relative aperture (f-number)
+ - t is the exposure time ("shutter speed") in seconds[2]
+ - 100 is the default ISO
+ - S is the new ISO
 
-## Running end-to-end tests
+## LV Cal
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+ https://photo.stackexchange.com/questions/32359/why-does-ev-increase-as-iso-increases
+ the  log2(100/S) is wrong on that link!
+  EV = log2(N²) + log2(1/t) - log2(S/100)
+ EV = aperture + shutter - ISO
+   https://photo.stackexchange.com/questions/73304/when-to-use-the-lv-formula
+ Another way to look at it
+ EV = log2(f^2/T)          Exposure Value
+ LV = EV + log2(ISO/100)   Light Value (= EV assumes ISO 100)

@@ -1,0 +1,58 @@
+[
+    {
+        "value": 0,
+        "text": "No ND: 0 stop 100%"
+    },
+    {
+        "value": 1,
+        "text": "ND2: 1 stop 50%"
+    },
+    {
+        "value": 2,
+        "text": "ND4: 2 stops 25%"
+    },
+    {
+        "value": 3,
+        "text": "ND8: 3 stops 12.5%"
+    },
+    {
+        "value": 4,
+        "text": "ND16: 4 stops 6.25%"
+    },
+    {
+        "value": 5,
+        "text": "ND32: 5 stops 3.13%"
+    },
+    {
+        "value": 6,
+        "text": "ND64: 6 stops 1.56%"
+    },
+    {
+        "value": 7,
+        "text": "ND128: 7 stops 0.78%"
+    },
+    {
+        "value": 8,
+        "text": "ND256: 8 stops 0.39%"
+    },
+    {
+        "value": 9,
+        "text": "ND512: 9 stops 0.19%"
+    },
+    {
+        "value": 10,
+        "text": "ND1000: 10 stops 0.1%"
+    },
+    {
+        "value": 11,
+        "text": "ND2048: 11 stops 0.049%"
+    },
+    {
+        "value": 12,
+        "text": "ND4096: 12 stops 0.024%"
+    },
+    {
+        "value": 13,
+        "text": "ND8192: 13 stops 0.012%"
+    }
+]

@@ -1,0 +1,202 @@
+[
+    {
+        "value": 1,
+        "class": "full-stop",
+        "text": "f/1"
+    },
+    {
+        "value": 1.122,
+        "class": "third-stop",
+        "text": "f/1.1"
+    },
+    {
+        "value": 1.26,
+        "class": "third-stop",
+        "text": "f/1.2"
+    },
+    {
+        "value": 1.414,
+        "class": "full-stop",
+        "text": "f/1.4"
+    },
+    {
+        "value": 1.587,
+        "class": "third-stop",
+        "text": "f/1.6"
+    },
+    {
+        "value": 1.782,
+        "class": "third-stop",
+        "text": "f/1.8"
+    },
+    {
+        "value": 2,
+        "class": "full-stop",
+        "text": "f/2"
+    },
+    {
+        "value": 2.245,
+        "class": "third-stop",
+        "text": "f/2.2"
+    },
+    {
+        "value": 2.52,
+        "class": "third-stop",
+        "text": "f/2.5"
+    },
+    {
+        "value": 2.828,
+        "class": "full-stop",
+        "text": "f/2.8"
+    },
+    {
+        "value": 3.175,
+        "class": "third-stop",
+        "text": "f/3.2"
+    },
+    {
+        "value": 3.564,
+        "class": "third-stop",
+        "text": "f/3.5"
+    },
+    {
+        "value": 4,
+        "class": "full-stop",
+        "text": "f/4"
+    },
+    {
+        "value": 4.49,
+        "class": "third-stop",
+        "text": "f/4.5"
+    },
+    {
+        "value": 5.04,
+        "class": "third-stop",
+        "text": "f/5.0"
+    },
+    {
+        "value": 5.657,
+        "class": "full-stop",
+        "text": "f/5.6"
+    },
+    {
+        "value": 6.35,
+        "class": "third-stop",
+        "text": "f/6.3"
+    },
+    {
+        "value": 7.127,
+        "class": "third-stop",
+        "text": "f/7.1"
+    },
+    {
+        "value": 8,
+        "class": "full-stop",
+        "text": "f/8"
+    },
+    {
+        "value": 8.98,
+        "class": "third-stop",
+        "text": "f/9"
+    },
+    {
+        "value": 10.079,
+        "class": "third-stop",
+        "text": "f/10"
+    },
+    {
+        "value": 11.314,
+        "class": "full-stop",
+        "text": "f/11"
+    },
+    {
+        "value": 12.699,
+        "class": "third-stop",
+        "text": "f/13"
+    },
+    {
+        "value": 14.254,
+        "class": "third-stop",
+        "text": "f/14"
+    },
+    {
+        "value": 16.0,
+        "class": "full-stop",
+        "text": "f/16"
+    },
+    {
+        "value": 17.959,
+        "class": "third-stop",
+        "text": "f/18"
+    },
+    {
+        "value": 20.159,
+        "class": "third-stop",
+        "text": "f/20"
+    },
+    {
+        "value": 22.627,
+        "class": "full-stop",
+        "text": "f/22"
+    },
+    {
+        "value": 25.398,
+        "class": "third-stop",
+        "text": "f/25"
+    },
+    {
+        "value": 28.509,
+        "class": "third-stop",
+        "text": "f/28"
+    },
+    {
+        "value": 32,
+        "class": "full-stop",
+        "text": "f/32"
+    },
+    {
+        "value": 35.919,
+        "class": "third-stop",
+        "text": "f/36"
+    },
+    {
+        "value": 40.318,
+        "class": "third-stop",
+        "text": "f/40"
+    },
+    {
+        "value": 45.255,
+        "class": "full-stop",
+        "text": "f/45"
+    },
+    {
+        "value": 50.797,
+        "class": "third-stop",
+        "text": "f/50"
+    },
+    {
+        "value": 57.018,
+        "class": "third-stop",
+        "text": "f/57"
+    },
+    {
+        "value": 64,
+        "class": "full-stop",
+        "text": "f/64"
+    },
+    {
+        "value": 71.838,
+        "class": "third-stop",
+        "text": "f/72"
+    },
+    {
+        "value": 80.635,
+        "class": "third-stop",
+        "text": "f/80"
+    },
+    {
+        "value": 90.51,
+        "class": "full-stop",
+        "text": "f/90"
+    }
+]
