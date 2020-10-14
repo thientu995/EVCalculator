@@ -30,7 +30,7 @@ export class AppComponent {
       this.valueFinal.Aperture = this.valueBasic.Aperture;
       //shutterSpeed
       this.shutterSpeed = results[1];
-      this.valueBasic.Shutter = this.shutterSpeed[21].value;
+      this.valueBasic.Shutter = this.shutterSpeed[21].text;
       //iso
       this.isoValue = results[2];
       this.valueBasic.ISO = this.isoValue[12].value;
@@ -64,7 +64,7 @@ export class AppComponent {
   valueBasic = {
     FocalLength: 50,
     Aperture: 0,
-    Shutter: 0,
+    Shutter: '0',
     ISO: 0,
     Stop: 0
   };
@@ -92,8 +92,9 @@ export class AppComponent {
   onCal() {
     // this.valueResult.ISO = this.valueBasic.ISO;
     // this.valueResult.Stop = this.valueFinal.Stop;
-    this.valueResult.EV = this.calEV(this.valueBasic.Aperture, this.valueBasic.Shutter, 100);
-    this.valueResult.LV = this.calEV(this.valueBasic.Aperture, this.valueBasic.Shutter, this.valueBasic.ISO);
+    let sB = eval(this.valueBasic.Shutter);
+    this.valueResult.EV = this.calEV(this.valueBasic.Aperture, sB, 100);
+    this.valueResult.LV = this.calEV(this.valueBasic.Aperture, sB, this.valueBasic.ISO);
 
     //Result
     this.valueResult.ET = this.calET(this.valueBasic.ISO, this.valueBasic.Aperture, this.valueResult.LV);
@@ -128,7 +129,7 @@ export class AppComponent {
 
   formatSpeed(value: number) {
     var time = Math.round(1 / value);
-    if (time <= 0) {
+    if (time <= 1) {
       return Math.round(value) + '';
     }
     return '1/' + time;
@@ -152,9 +153,9 @@ export class AppComponent {
         '<span class="w3-text-red">Image <b>NOISE</b></span>'
         : null;
     }
-    var result = getStatusTripod() || getStatusISO();
-    result = result || '<span class="w3-text-green">Image <b>GOOD</b></span>';
-    return result;
+    var resultStatus = [getStatusTripod(), getStatusISO()];
+    var result = resultStatus.filter((x) => (x != null)).join(' and ');
+    return result || '<span class="w3-text-green">Image <b>GOOD</b></span>';
   }
 
   getColorEV(index: number) {
@@ -169,7 +170,7 @@ export class AppComponent {
 
   startCountdown(value: number) {
     this.showCountDown = true;
-    let coutDown = 3;
+    let coutDown = 2;
     this.valueCountDown = 'Start after ' + coutDown;
     let countDownStarting = setInterval(() => {
       coutDown -= 1;
@@ -177,20 +178,31 @@ export class AppComponent {
         clearInterval(countDownStarting);
 
         value *= 1000;
+        var initialMillis = Date.now();
         this.funcCountDown = setInterval(() => {
-          value = value - 1;
-          if (value <= 0) {
-            value = 0;
-            clearInterval(this.funcCountDown);
-          }
+          let timer = this.timer(value, initialMillis);
+          value = timer[0];
+          initialMillis = timer[1];
           coutDown = this.formatNum(value / 1000);
-          this.valueCountDown = '' + coutDown + ' (' + Math.floor(coutDown) + ')';
+          this.valueCountDown = '' + Math.floor(coutDown)
+            + '<br>'
+            + '(' + this.formatNum(coutDown)
+            + ')';
         }, 1);
       }
-      else{
+      else {
         this.valueCountDown = 'Start after ' + coutDown;
       }
     }, 1000)
+  }
+
+  timer(valueMs: number, initialMillis) {
+    var current = Date.now();
+    if (valueMs <= 0) {
+      clearInterval(this.funcCountDown);
+      return [0, current];
+    }
+    return [valueMs - (current - initialMillis), current];
   }
 
   closeModelCountDown() {

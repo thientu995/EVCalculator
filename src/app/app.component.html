@@ -26,7 +26,7 @@
         <div class="w3-padding-small w3-panel w3-pale-green w3-leftbar w3-border w3-border-green">
           <h3>Shutter Speed</h3>
           <select class="w3-input" [(ngModel)]="valueBasic.Shutter" (ngModelChange)="onCal()">
-            <option *ngFor="let item of shutterSpeed" [ngValue]="item.value">{{item.text}} ({{item.value}})</option>
+            <option *ngFor="let item of shutterSpeed" [ngValue]="item.text">{{item.text}} ({{item.value}})</option>
           </select>
         </div>
 
@@ -103,16 +103,16 @@
         <hr>
         <div class="w3-col s12 m6">
           <div class="">
-            <h4>Exposure Value (EV100)</h4>
+            <h4>Light Value (EV{{valueBasic.ISO}})</h4>
             <p class="w3-xlarge
-             w3-text-orange">{{formatNum(valueResult.EV)}} ({{Math.round(valueResult.EV)}})</p>
+            w3-text-orange">{{formatNum(valueResult.LV)}} ({{Math.round(valueResult.LV)}})</p>
           </div>
         </div>
         <div class="w3-col s12 m6">
           <div class="">
-            <h4>Light Value (EV{{valueBasic.ISO}})</h4>
+            <h4>Exposure Value (EV100)</h4>
             <p class="w3-xlarge
-            w3-text-orange">{{formatNum(valueResult.LV)}} ({{Math.round(valueResult.LV)}})</p>
+             w3-text-orange">{{formatNum(valueResult.EV)}} ({{Math.round(valueResult.EV)}})</p>
           </div>
         </div>
         <div class="">
@@ -141,7 +141,7 @@
     </header>
 
     <div class="w3-container w3-center">
-      <p class="w3-jumbo">{{valueCountDown}}</p>
+      <p class="w3-jumbo" [innerHTML]="valueCountDown"></p>
     </div>
   </div>
 </div>
