@@ -2,8 +2,8 @@ import { HttpService } from './http.service';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { Component } from '@angular/core';
-import { Observable, forkJoin } from 'rxjs';
-import { IfStmt } from '@angular/compiler';
+import { forkJoin } from 'rxjs';
+// import { setInterval } from 'timers';
 
 
 @Component({
@@ -57,6 +57,10 @@ export class AppComponent {
   stopValue = null;
   evChart = null;
 
+  showCountDown = false;
+  funcCountDown = null;
+  valueCountDown = '';
+
   valueBasic = {
     FocalLength: 50,
     Aperture: 0,
@@ -76,8 +80,8 @@ export class AppComponent {
     LV: 0,
     ET: 0,
 
-    ISO: 0,
-    Stop: 0,
+    // ISO: 0,
+    // Stop: 0,
     ETND: 0,
 
     EVF: 0,
@@ -86,15 +90,15 @@ export class AppComponent {
   }
 
   onCal() {
-    this.valueResult.ISO = this.valueBasic.ISO;
-    this.valueResult.Stop = this.valueFinal.Stop;
+    // this.valueResult.ISO = this.valueBasic.ISO;
+    // this.valueResult.Stop = this.valueFinal.Stop;
     this.valueResult.EV = this.calEV(this.valueBasic.Aperture, this.valueBasic.Shutter, 100);
-    this.valueResult.LV = this.calEV(this.valueBasic.Aperture, this.valueBasic.Shutter, this.valueResult.ISO);
+    this.valueResult.LV = this.calEV(this.valueBasic.Aperture, this.valueBasic.Shutter, this.valueBasic.ISO);
 
     //Result
-    this.valueResult.ET = this.calET(this.valueBasic.ISO, this.valueFinal.Aperture, this.valueResult.LV);
+    this.valueResult.ET = this.calET(this.valueBasic.ISO, this.valueBasic.Aperture, this.valueResult.LV);
     this.valueResult.ETF = this.calET(this.valueFinal.ISO, this.valueFinal.Aperture, this.valueResult.LV);
-    this.valueResult.ETND = this.calETND(this.valueResult.ETF, this.valueResult.Stop);
+    this.valueResult.ETND = this.calETND(this.valueResult.ETF, this.valueFinal.Stop);
   }
 
   calAperture(aperture: number) {
@@ -124,20 +128,20 @@ export class AppComponent {
 
   formatSpeed(value: number) {
     var time = Math.round(1 / value);
-    if (time < 0) {
+    if (time <= 0) {
       return Math.round(value) + '';
     }
     return '1/' + time;
   }
 
   formatNum(value: number) {
-    return value.toFixed(4);
+    return Number(value.toFixed(4));
   }
 
   formatStyleShutter(type: string) {
     var getStatusTripod = () => {
       var value = 'F' == type ? this.valueResult.ETND : this.valueResult.ET;
-      value = Number(this.formatNum(value)) - Number(this.formatNum(1 / Number(this.valueBasic.FocalLength)));
+      value = this.formatNum(value) - Number(this.formatNum(1 / Number(this.valueBasic.FocalLength)));
       return value > 0 ?
         '<span class="w3-text-red">Image <b>VIBRATION</b></span>'
         : null;
@@ -161,5 +165,36 @@ export class AppComponent {
       'color': 'rgb(' + rgbColor.join(',') + ')',
       'background-color': 'rgb(' + rgbBkg.join(',') + ')'
     };
+  }
+
+  startCountdown(value: number) {
+    this.showCountDown = true;
+    let coutDown = 3;
+    this.valueCountDown = 'Start after ' + coutDown;
+    let countDownStarting = setInterval(() => {
+      coutDown -= 1;
+      if (coutDown == 0) {
+        clearInterval(countDownStarting);
+
+        value *= 1000;
+        this.funcCountDown = setInterval(() => {
+          value = value - 1;
+          if (value <= 0) {
+            value = 0;
+            clearInterval(this.funcCountDown);
+          }
+          coutDown = this.formatNum(value / 1000);
+          this.valueCountDown = '' + coutDown + ' (' + Math.floor(coutDown) + ')';
+        }, 1);
+      }
+      else{
+        this.valueCountDown = 'Start after ' + coutDown;
+      }
+    }, 1000)
+  }
+
+  closeModelCountDown() {
+    this.showCountDown = false;
+    clearInterval(this.funcCountDown);
   }
 }
