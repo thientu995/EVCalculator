@@ -158,13 +158,13 @@ export class AppComponent {
     return result || '<span class="w3-text-green">Image <b>GOOD</b></span>';
   }
 
-  getColorEV(index: number) {
+  getColorEV(item, index: number) {
     index = Math.abs(index + 1) * 10;
     var rgbBkg = [index, index, 0];
     var rgbColor = [255 - index, 0, 255 - index];
     return {
       'color': 'rgb(' + rgbColor.join(',') + ')',
-      'background-color': 'rgb(' + rgbBkg.join(',') + ')'
+      'background-color': item.value == Math.round(this.valueResult.LV) ? 'white' : 'rgb(' + rgbBkg.join(',') + ')'
     };
   }
 
