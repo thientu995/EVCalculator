@@ -38,7 +38,7 @@
     { "value": 0.5, "class": "full-stop", "text": "1/2" },
     { "value": 0.6299605, "class": "third-stop", "text": "1/1.6" },
     { "value": 0.7937005, "class": "third-stop", "text": "1/1.3" },
-    { "value": 1.0, "class": "full-stop", "text": "1 second" },
+    { "value": 1.0, "class": "full-stop", "text": "1" },
     { "value": 1.2599, "class": "third-stop", "text": "1.3" },
     { "value": 1.5874, "class": "third-stop", "text": "1.6" },
     { "value": 2, "class": "full-stop", "text": "2" },
