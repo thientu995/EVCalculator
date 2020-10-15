@@ -21,7 +21,7 @@ import { AppComponent } from '../app.component';
 export class ExposureCalculatorModule {
 
   calAperture(aperture: number) {
-    return Math.log2(aperture * aperture);
+    return Math.log2(Math.pow(aperture, 2));
   }
 
   calShutter(shutter: number) {
@@ -37,7 +37,7 @@ export class ExposureCalculatorModule {
   }
 
   calET(iso: number, a: number, ev: number) {
-    return (iso * Math.pow(a, 2)) / (100 * Math.pow(2, ev))
+    return (100 * Math.pow(a, 2)) / (iso * Math.pow(2, ev));
   }
 
   calETND(ET: number, Stop: number) {
