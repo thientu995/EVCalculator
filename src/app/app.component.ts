@@ -26,22 +26,11 @@ export class AppComponent {
     ]).subscribe(results => {
       //aperture
       this.apertureValue = results[0];
-      this.valueBasic.Aperture = this.apertureValue[21].value;
-      this.valueFinal.Aperture = this.valueBasic.Aperture;
-      //shutterSpeed
       this.shutterSpeed = results[1];
-      this.valueBasic.Shutter = this.shutterSpeed[21].text;
-      //iso
       this.isoValue = results[2];
-      this.valueBasic.ISO = this.isoValue[12].value;
-      this.valueFinal.ISO = this.valueBasic.ISO;
-      //stop
       this.stopValue = results[3];
-      this.valueFinal.Stop = this.stopValue[0].value;
-      //evChart
       this.evChart = results[4];
-      //cal
-      this.onCal();
+      this.setValue();
     });
   }
 
@@ -79,9 +68,6 @@ export class AppComponent {
     EV: 0,
     LV: 0,
     ET: 0,
-
-    // ISO: 0,
-    // Stop: 0,
     ETND: 0,
 
     EVF: 0,
@@ -89,42 +75,30 @@ export class AppComponent {
     ETF: 0,
   }
 
+  setValue(a: number = null, s: string = null, iso: number = null, stop: number = null) {
+    this.valueBasic.Aperture = a || this.apertureValue[21].value;
+    this.valueFinal.Aperture = this.valueBasic.Aperture;
+    //shutterSpeed
+    this.valueBasic.Shutter = s || this.shutterSpeed[21].text;
+    //iso
+    this.valueBasic.ISO = iso || this.isoValue[12].value;
+    this.valueFinal.ISO = this.valueBasic.ISO;
+    //stop
+    this.valueFinal.Stop = stop || this.stopValue[0].value;
+
+    //cal
+    this.onCal();
+  }
+
   onCal() {
-    // this.valueResult.ISO = this.valueBasic.ISO;
-    // this.valueResult.Stop = this.valueFinal.Stop;
     let sB = eval(this.valueBasic.Shutter);
-    this.valueResult.EV = this.calEV(this.valueBasic.Aperture, sB, 100);
-    this.valueResult.LV = this.calEV(this.valueBasic.Aperture, sB, this.valueBasic.ISO);
+    this.valueResult.EV = this.httpService.calEV(this.valueBasic.Aperture, sB, 100);
+    this.valueResult.LV = this.httpService.calEV(this.valueBasic.Aperture, sB, this.valueBasic.ISO);
 
     //Result
-    this.valueResult.ET = this.calET(this.valueBasic.ISO, this.valueBasic.Aperture, this.valueResult.LV);
-    this.valueResult.ETF = this.calET(this.valueFinal.ISO, this.valueFinal.Aperture, this.valueResult.LV);
-    this.valueResult.ETND = this.calETND(this.valueResult.ETF, this.valueFinal.Stop);
-  }
-
-  calAperture(aperture: number) {
-    return Math.log2(aperture * aperture)
-  }
-
-  calShutter(shutter: number) {
-    return Math.log2(1 / shutter);
-  }
-
-  calISO(iso: number) {
-    return Math.log2(iso / 100);
-  }
-
-  calEV(a: number, s: number, iso: number) {
-    return this.calAperture(a) + this.calShutter(s) - this.calISO(iso);
-  }
-
-  calET(iso: number, a: number, ev: number) {
-    //return iso * a * a / 100 * Math.pow(2, ev);
-    return (100 * Math.pow(a, 2)) / (iso * Math.pow(2, ev))
-  }
-
-  calETND(ET: number, Stop: number) {
-    return Math.abs(ET * Math.pow(2, Stop));
+    this.valueResult.ET = this.httpService.calET(this.valueBasic.ISO, this.valueBasic.Aperture, this.valueResult.LV);
+    this.valueResult.ETF = this.httpService.calET(this.valueFinal.ISO, this.valueFinal.Aperture, this.valueResult.LV);
+    this.valueResult.ETND = this.httpService.calETND(this.valueResult.ETF, this.valueFinal.Stop);
   }
 
   formatSpeed(value: number) {
@@ -169,40 +143,68 @@ export class AppComponent {
   }
 
   startCountdown(value: number) {
+    //Function
+
+    var msToTime = (s) => {
+      var ms = s % 1000;
+      s = (s - ms) / 1000;
+      var secs = s % 60;
+      s = (s - secs) / 60;
+      var mins = s % 60;
+      var hrs = (s - mins) / 60;
+
+      return this.httpService.formatPad(hrs)
+        + ':' + this.httpService.formatPad(mins)
+        + ':' + this.httpService.formatPad(secs)
+        + '.' + this.httpService.formatPad(ms);
+    }
+
+
+    var countDowntimer = (valueMs: number, initialMillis) => {
+      var current = Date.now();
+      if (valueMs <= 0) {
+        clearInterval(this.funcCountDown);
+        return [0, current];
+      }
+      return [valueMs - (current - initialMillis), current];
+    }
+
+    var countDownStarting = () => {
+      setTimeout(() => {
+        coutDown -= 1;
+        if (coutDown <= 0) {
+          countDownTiming();
+        }
+        else {
+          this.valueCountDown = 'Start after ' + coutDown;
+          countDownStarting();
+        }
+      }, 1000)
+    }
+
+    var countDownTiming = () => {
+      value *= 1000;
+      var initialMillis = Date.now();
+      this.funcCountDown = setInterval(() => {
+        let timer = countDowntimer(value, initialMillis);
+        value = timer[0];
+        initialMillis = timer[1];
+        coutDown = this.formatNum(value / 1000);
+        this.valueCountDown = ''
+          + Math.floor(coutDown) + ' s'
+          + '<br>'
+          + msToTime(value) + ' ms'
+          + '<br>'
+          + '(' + this.formatNum(coutDown) + ')'
+          ;
+      }, 1);
+    }
+
+    // Process
     this.showCountDown = true;
     let coutDown = 2;
     this.valueCountDown = 'Start after ' + coutDown;
-    let countDownStarting = setInterval(() => {
-      coutDown -= 1;
-      if (coutDown == 0) {
-        clearInterval(countDownStarting);
-
-        value *= 1000;
-        var initialMillis = Date.now();
-        this.funcCountDown = setInterval(() => {
-          let timer = this.timer(value, initialMillis);
-          value = timer[0];
-          initialMillis = timer[1];
-          coutDown = this.formatNum(value / 1000);
-          this.valueCountDown = '' + Math.floor(coutDown)
-            + '<br>'
-            + '(' + this.formatNum(coutDown)
-            + ')';
-        }, 1);
-      }
-      else {
-        this.valueCountDown = 'Start after ' + coutDown;
-      }
-    }, 1000)
-  }
-
-  timer(valueMs: number, initialMillis) {
-    var current = Date.now();
-    if (valueMs <= 0) {
-      clearInterval(this.funcCountDown);
-      return [0, current];
-    }
-    return [valueMs - (current - initialMillis), current];
+    countDownStarting();
   }
 
   closeModelCountDown() {
