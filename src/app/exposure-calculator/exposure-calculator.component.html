@@ -1,0 +1,143 @@
+<div class="w3-row">
+    <div class="w3-card w3-border w3-border-green">
+        <h2 class="w3-margin w3-round w3-green">
+            <p class="w3-padding w3-round w3-green w3-border w3-border-white">Basic (Result of Camera)</p>
+        </h2>
+        <div class="w3-container">
+            <div class="w3-padding-small w3-panel w3-pale-green w3-leftbar w3-border w3-border-green">
+                <h3>Focal Length (FF mm)</h3>
+                <input class="w3-input" type="number" min="1" [(ngModel)]="valueBasic.FocalLength" />
+            </div>
+
+            <div class="w3-padding-small w3-panel w3-pale-green w3-leftbar w3-border w3-border-green">
+                <h3>Aperture</h3>
+                <select class="w3-input" [(ngModel)]="valueBasic.Aperture" (ngModelChange)="onCal()">
+                    <option *ngFor="let item of apertureValue" [ngValue]="item.value">{{item.text}} ({{item.value}})
+                    </option>
+                </select>
+            </div>
+
+            <div class="w3-padding-small w3-panel w3-pale-green w3-leftbar w3-border w3-border-green">
+                <h3>Shutter Speed</h3>
+                <select class="w3-input" [(ngModel)]="valueBasic.Shutter" (ngModelChange)="onCal()">
+                    <option *ngFor="let item of shutterSpeed" [ngValue]="item.text">{{item.text}} ({{item.value}})
+                    </option>
+                </select>
+            </div>
+
+            <div class="w3-padding-small w3-panel w3-pale-green w3-leftbar w3-border w3-border-green">
+                <h3>ISO/ASA</h3>
+                <select class="w3-input" [(ngModel)]="valueBasic.ISO" (ngModelChange)="onCal()">
+                    <option *ngFor="let item of isoValue" [ngValue]="item.value">{{item.text}} ({{item.value}})
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="w3-card w3-border w3-border-blue">
+        <h2 class="w3-margin w3-round w3-blue">
+            <p class="w3-padding w3-round w3-blue w3-border w3-border-white">Final (Result of You want)</p>
+        </h2>
+        <div class="w3-container">
+            <div class="w3-padding-small w3-panel w3-pale-blue w3-leftbar w3-border w3-border-blue">
+                <h3>Aperture</h3>
+                <select class="w3-input" [(ngModel)]="valueFinal.Aperture" (ngModelChange)="onCal()">
+                    <option *ngFor="let item of apertureValue" [ngValue]="item.value">{{item.text}} ({{item.value}})
+                    </option>
+                </select>
+            </div>
+
+            <div class="w3-padding-small w3-panel w3-pale-blue w3-leftbar w3-border w3-border-blue">
+                <h3>ISO/ASA</h3>
+                <select class="w3-input" [(ngModel)]="valueFinal.ISO" (ngModelChange)="onCal()">
+                    <option *ngFor="let item of isoValue" [ngValue]="item.value">{{item.text}} ({{item.value}})
+                    </option>
+                </select>
+            </div>
+
+            <div class="w3-padding-small w3-panel w3-pale-blue w3-leftbar w3-border w3-border-blue">
+                <h3>Neutral Density (ND Filter)</h3>
+                <select class="w3-input" [(ngModel)]="valueFinal.Stop" (ngModelChange)="onCal()">
+                    <option *ngFor="let item of stopValue" [ngValue]="item.value">{{item.text}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="w3-card w3-border w3-border-red">
+    <h2 class="w3-margin w3-round w3-red">
+        <p class="w3-padding w3-round w3-red w3-border w3-border-white">Result</p>
+    </h2>
+    <div class="w3-container">
+        <div class="w3-row w3-padding-small w3-panel w3-pale-red w3-leftbar w3-border w3-border-red">
+            <h3>Exposure Time</h3>
+            <hr>
+            <div class="w3-col s12 m6">
+                <div class="">
+                    <h4>Exposure Time Final (ETF) <button class="w3-button w3-teal"
+                            (click)="startCountdown(valueResult.ET)">Start</button></h4>
+                    <p class="w3-xlarge
+                    w3-text-orange">{{formatNum(valueResult.ET)}}s ({{formatSpeed(valueResult.ET)}}s)</p>
+                    <p [innerHTML]="formatStyleShutter('B')"></p>
+                </div>
+            </div>
+            <div class="w3-col s12 m6">
+                <div class="">
+                    <h4>ETF with ND Filter ({{valueFinal.Stop}} stops) <button class="w3-button w3-teal"
+                            (click)="startCountdown(valueResult.ETND)">Start</button></h4>
+                    <p class="w3-xlarge
+                    w3-text-orange">{{formatNum(valueResult.ETND)}}s ({{formatSpeed(valueResult.ETND)}}s)</p>
+                    <p [innerHTML]="formatStyleShutter('F')"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="w3-row w3-padding-small w3-panel w3-pale-red w3-leftbar w3-border w3-border-red">
+            <h3>Exposure Value of Basic</h3>
+            <hr>
+            <div class="w3-col s12 m6">
+                <div class="">
+                    <h4>Light Value (EV{{valueBasic.ISO}})</h4>
+                    <p class="w3-xlarge
+                w3-text-orange">{{formatNum(valueResult.LV)}} ({{Math.round(valueResult.LV)}})</p>
+                </div>
+            </div>
+            <div class="w3-col s12 m6">
+                <div class="">
+                    <h4>Exposure Value (EV100)</h4>
+                    <p class="w3-xlarge
+                 w3-text-orange">{{formatNum(valueResult.EV)}} ({{Math.round(valueResult.EV)}})</p>
+                </div>
+            </div>
+            <div class="">
+                <h4>Exposure Value Chart</h4>
+                <div class="w3-col s4 m1 l0 w3-center w3-border w3-border-red"
+                    title="{{item.lightSource}}: {{item.text}}" *ngFor="let item of evChart; index as i"
+                    [ngStyle]="getColorEV(item, i)">
+                    <span *ngIf="item.value == Math.round(valueResult.LV)">
+                        <fa-icon [icon]="['fas', item.icon]"></fa-icon>
+                    </span>
+                    <br>
+                    <label><b>{{item.value}}</b></label>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="w3-modal" [style.display]="showCountDown ? 'block' : 'none'">
+    <div class="w3-modal-content">
+        <header class="w3-container w3-teal">
+            <span (click)="closeModelCountDown()" class="w3-button w3-display-topright">&times;</span>
+            <h2>Count down</h2>
+        </header>
+
+        <div class="w3-container w3-center">
+            <p class="w3-jumbo" [innerHTML]="valueCountDown"></p>
+        </div>
+    </div>
+</div>
