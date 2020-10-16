@@ -120,7 +120,7 @@ export class ExposureCalculatorComponent implements OnInit {
 
   formatStyleShutter(type: string) {
     var getStatusTripod = () => {
-      var value = 'F' == type ? this.valueResult.ETND : this.valueResult.ET;
+      var value = 'F' == type ? this.valueResult.ETND : this.valueResult.ETF;
       value = this.formatNum(value) - Number(this.formatNum(1 / Number(this.valueBasic.FocalLength)));
       return value > 0 ?
         '<span class="w3-text-red">Image <b>VIBRATION</b></span>'
