@@ -1,8 +1,20 @@
-<div class="w3-padding-large w3-row w3-dark-gray">
-  <h1>
-    {{title}}
-  </h1>
+<div class="w3-top">
+  <div class="w3-bar w3-dark-gray w3-padding-small">
+    <div class="w3-bar-item w3-black w3-dropdown-click w3-round w3-padding-small w3-hover-gray">
+      <button class="w3-button w3-hover-gray" (click)="toggleMenu()">
+        <fa-icon [icon]="['fas', 'bars']"></fa-icon>
+      </button>
+      <div *ngIf="hiddenMenu" class="w3-dropdown-content w3-bar-block w3-card-4 w3-show">
+        <a class="w3-bar-item w3-button w3-border-bottom" routerLink="/" (click)="clickMenu($event)">Exposure Calculator</a>
+        <a class="w3-bar-item w3-button w3-border-bottom" routerLink="/histogram" (click)="clickMenu($event)">Histogram</a>
+      </div>
+    </div>
+    <div class="w3-bar-item w3-large">
+        {{title}}
+    </div>
+  </div>
 </div>
+<br><br><br>
 <hr>
 <div class="w3-container">
   <router-outlet></router-outlet>

@@ -5,6 +5,10 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./exposure-calculator/exposure-calculator.module').then(m => m.ExposureCalculatorModule)
+  },
+  {
+    path: 'histogram',
+    loadChildren: () => import('./histogram/histogram.module').then(m => m.HistogramModule)
   }];
 
 @NgModule({

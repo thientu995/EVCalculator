@@ -13,11 +13,20 @@ export class AppComponent {
     library.addIconPacks(fas);
   }
   title = '';
-  
+  hiddenMenu = false;
   ngOnInit() {
 
   }
 
   ngAfterViewInit() {
+  }
+
+  toggleMenu() {
+    this.hiddenMenu = !this.hiddenMenu;
+  }
+
+  clickMenu(ev) {
+    console.log(ev.target);
+    this.hiddenMenu = false;
   }
 }
