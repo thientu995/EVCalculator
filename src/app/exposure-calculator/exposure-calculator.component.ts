@@ -72,7 +72,7 @@ export class ExposureCalculatorComponent implements OnInit {
   valueResult = {
     EV: 0,
     LV: 0,
-    ET: 0,
+    // ET: 0,
     ETND: 0,
 
     EVF: 0,
@@ -101,7 +101,7 @@ export class ExposureCalculatorComponent implements OnInit {
     this.valueResult.LV = this.ecModule.calEV(this.valueBasic.Aperture, sB, this.valueBasic.ISO);
 
     //Result
-    this.valueResult.ET = this.ecModule.calET(this.valueBasic.ISO, this.valueBasic.Aperture, this.valueResult.LV);
+    // this.valueResult.ET = this.ecModule.calET(this.valueBasic.ISO, this.valueBasic.Aperture, this.valueResult.LV);
     this.valueResult.ETF = this.ecModule.calET(this.valueFinal.ISO, this.valueFinal.Aperture, this.valueResult.LV);
     this.valueResult.ETND = this.ecModule.calETND(this.valueResult.ETF, this.valueFinal.Stop);
   }
